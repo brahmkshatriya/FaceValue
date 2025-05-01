@@ -19,17 +19,12 @@ import java.util.UUID
 
 object PermsUtils {
     fun ComponentActivity.checkAppPermissions(onGrant: (String) -> Unit = {}) {
-        val perms = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) listOfNotNull(
+        val perms = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) listOf(
             Triple(
                 Manifest.permission.READ_MEDIA_IMAGES,
                 getString(R.string.image),
                 getString(R.string.image_permission_summary)
-            ),
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) Triple(
-                Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED,
-                getString(R.string.image),
-                getString(R.string.image_permission_summary)
-            ) else null
+            )
         ) else listOf(
             Triple(
                 Manifest.permission.READ_EXTERNAL_STORAGE,

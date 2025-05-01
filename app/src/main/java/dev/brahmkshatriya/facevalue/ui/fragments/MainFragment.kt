@@ -8,8 +8,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.google.android.material.tabs.TabLayout
 import dev.brahmkshatriya.facevalue.databinding.FragmentMainBinding
 import dev.brahmkshatriya.facevalue.ui.ImageViewModel
@@ -30,8 +30,7 @@ class MainFragment : Fragment() {
         SmallImageAdapter {
             viewModel.currentImageIndex.value = it
             parentFragmentManager.commit {
-                add<ImageViewFragment>(id)
-                hide(this@MainFragment)
+                replace<ImageViewFragment>(id)
                 addToBackStack(null)
             }
         }
