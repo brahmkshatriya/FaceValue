@@ -24,6 +24,13 @@ It uses Google's MediaPipe library to detect faces in images.
 - Allows creating and
   reusing [Faces](./app/src/main/java/dev/brahmkshatriya/facevalue/data/db/FaceDao.kt) for tagging.
 
+## App Flow
+
+### Face Detection Flow
+
+![image](https://github.com/user-attachments/assets/acda4246-62af-4ba6-ad3c-ce658858552a)
+
+
 ## Building
 
 ### Prerequisites
