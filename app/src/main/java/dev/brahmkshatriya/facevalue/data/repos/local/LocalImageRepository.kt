@@ -11,22 +11,20 @@ class LocalImageRepository(
 ) : ImageRepository {
     override val name = "Local"
 
-    override suspend fun getImages(): List<ImageHolder> {
+    override suspend fun getImages(block: suspend (ImageHolder) -> Unit) {
         val cursor = context.contentResolver.query(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             arrayOf(MediaStore.MediaColumns.DATA),
             null,
             null,
-            null
+            "${MediaStore.Images.Media.DATE_MODIFIED} DESC"
         )!!
-        return cursor.use {
-            val images = mutableListOf<ImageHolder>()
+        cursor.use {
             val columnIndex = it.getColumnIndex(MediaStore.Images.Media.DATA)
             while (it.moveToNext()) {
                 val imagePath = it.getString(columnIndex)
-                images.add(imagePath.toUriImageHolder())
+                block(imagePath.toUriImageHolder())
             }
-            images
-        }.reversed()
+        }
     }
 }

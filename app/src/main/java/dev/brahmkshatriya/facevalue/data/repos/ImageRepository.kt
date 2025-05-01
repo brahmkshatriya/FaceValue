@@ -4,5 +4,5 @@ import dev.brahmkshatriya.facevalue.models.ImageHolder
 
 interface ImageRepository {
     val name: String
-    suspend fun getImages(): List<ImageHolder>
+    suspend fun getImages(block: suspend (ImageHolder) -> Unit)
 }

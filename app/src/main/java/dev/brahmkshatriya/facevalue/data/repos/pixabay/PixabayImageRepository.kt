@@ -26,9 +26,9 @@ class PixabayImageRepository : ImageRepository {
         }
     }
 
-    override suspend fun getImages(): List<ImageHolder> {
+    override suspend fun getImages(block: suspend (ImageHolder) -> Unit) {
         val pics = getImages("portrait") + getImages("nature")
-        return pics.shuffled()
+        pics.shuffled().forEach { block(it) }
     }
 
     companion object {

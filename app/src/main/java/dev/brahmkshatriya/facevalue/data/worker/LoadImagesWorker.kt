@@ -23,30 +23,35 @@ class LoadImagesWorker(
         val repoId = inputData.getString("repoId") ?: return Result.failure()
         val repo = imageRepos.find { it.name == repoId } ?: return Result.failure()
 
+        fun enqueueDetectFaces(imageId: String) {
+            val request = OneTimeWorkRequestBuilder<DetectFacesWorker>()
+                .setInputData(
+                    Data.Builder().putString("repoId", repoId).putString("imageId", imageId).build()
+                )
+                .addTag(repoId)
+                .build()
+            workManager.enqueueUniqueWork(
+                "$repoId:$imageId", ExistingWorkPolicy.KEEP, request
+            )
+        }
+
         db.insertConfig(repoId, false)
-        val images = runCatching { repo.getImages() }.getOrElse {
+        runCatching {
+            repo.getImages {
+                val detected = db.getImageHolder(repoId, it.id).second ?: false
+                db.insertImage(repoId, it, detected)
+                if (!detected) enqueueDetectFaces(it.id)
+            }
+        }.getOrElse {
             it.printStackTrace()
             Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show()
             return Result.failure()
         }
-
-        images.forEach {
-            val detected = db.getImageHolder(repoId, it.id).second ?: false
-            db.insertImage(repoId, it, detected)
-        }
         db.insertConfig(repoId, true)
 
-        val requests = db.getAllImages(repoId).filter { !it.facesDetected }.map {
-            OneTimeWorkRequestBuilder<DetectFacesWorker>()
-                .setInputData(
-                    Data.Builder().putString("repoId", repoId).putString("imageId", it.id).build()
-                )
-                .addTag(repoId)
-                .build()
+        db.getAllImages(repoId).filter { !it.facesDetected }.forEach {
+            enqueueDetectFaces(it.id)
         }
-        workManager.enqueueUniqueWork(
-            "detectFaces", ExistingWorkPolicy.APPEND_OR_REPLACE, requests
-        )
 
         return Result.success()
     }
