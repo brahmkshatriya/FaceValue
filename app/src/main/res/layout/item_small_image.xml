@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="128dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="8dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/avatars" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/progressCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="8dp"
+        android:minWidth="24dp"
+        android:minHeight="24dp"
+        app:cardBackgroundColor="?colorOnSurface"
+        app:cardCornerRadius="16dp">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:indicatorColor="?colorSurface"
+            app:indicatorSize="20dp"
+            app:trackThickness="2dp" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/facesCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:drawablePadding="2dp"
+            android:gravity="center"
+            android:paddingEnd="4dp"
+            android:textColor="?colorSurface"
+            app:drawableStartCompat="@drawable/ic_logo"
+            app:drawableTint="?colorSurface"
+            tools:ignore="RtlSymmetry"
+            tools:text="10" />
+
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Face Value</string>
+    <string name="okay">Okay</string>
+    <string name="cancel">Cancel</string>
+    <string name="x_was_not_granted">%1$s was not granted</string>
+    <string name="x_permission_required">%1$s permission required</string>
+    <string name="image">Image</string>
+    <string name="image_permission_summary">To scan for faces on your device</string>
+    <string name="add_face">Add Face</string>
+    <string name="edit_face">Edit Face</string>
+    <string name="name">Name</string>
+    <string name="name_required">Name Required</string>
+</resources>
